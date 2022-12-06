@@ -8,8 +8,7 @@ def move1(columns, count, src, dst):
         columns[dst].append(columns[src].pop())
 
 def move2(columns, count, src, dst):
-    columns[src], temp = columns[src][0:-count], columns[src][-count]
-    #temp = [columns[src].pop() for _ in range(count)]
+    temp = [columns[src].pop() for _ in range(count)]
     columns[dst].extend(reversed(temp))
 
 columns1 = []
