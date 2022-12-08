@@ -1,12 +1,7 @@
-from collections import defaultdict
-from dataclasses import dataclass
+from collections import defaultdict, namedtuple
 from pathlib import Path
 
-@dataclass
-class File:
-    name: str
-    size: int
-
+File = namedtuple("File", ["name", "size"])
 Filesystem = dict[Path, list[Path | File]]
 
 with open("day07_input.txt") as f:
