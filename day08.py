@@ -20,6 +20,7 @@ def seen_from(x, y, dx, dy):
     return True
 
 def count_from(x, y, dx, dy):
+
     count = 0
     for tree in walk(x, y, dx, dy):
         count += 1
