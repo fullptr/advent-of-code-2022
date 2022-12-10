@@ -21,12 +21,11 @@ class Vec2:
         self.y += other.y
 
 def tail_movement(offset: Vec2) -> Vec2:
-    val = offset
     if abs(offset.x) > 1:
-        val.x //= 2
+        offset.x //= 2
     if abs(offset.y) > 1:
-        val.y //= 2
-    return val
+        offset.y //= 2
+    return offset
 
 def run(snek_length):
     snek = [Vec2(0, 0) for _ in range(snek_length)]
