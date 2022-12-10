@@ -1,14 +1,12 @@
 from queue import Queue
 from more_itertools import grouper
+
 with open("day10_input.txt") as f:
-    data = (l.strip() for l in f.readlines())
-
-jobs = Queue()
-
-for line in data:
-    match line.split():
-        case ["noop"]: jobs.put([1, 0]) # steps, addx value
-        case ["addx", value]: jobs.put([2, int(value)])
+    jobs = Queue()
+    for line in f.read().split("\n"):
+        match line.split():
+            case ["noop"]: jobs.put([1, 0]) # steps, addx value
+            case ["addx", value]: jobs.put([2, int(value)])
 
 reg = 1
 cycle = 1
