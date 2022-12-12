@@ -4,6 +4,13 @@ from dataclasses import dataclass, field
 with open("day11_input.txt") as f:
     data = f.read()
 
+monkey_match = """Monkey {num}:
+  Starting items: {items}
+  Operation: new = old {formula}
+  Test: divisible by {test:d}
+    If true: throw to monkey {if_true:d}
+    If false: throw to monkey {if_false:d}"""
+
 @dataclass
 class Monkey:
     items: field(default_factory=list)
@@ -23,17 +30,13 @@ def apply_formula(formula: str, old: int) -> int:
 def get_monkeys() -> list[Monkey]:
     monkeys: list[Monkey] = []
     for monkey_data in data.split("\n\n"):
-        items = parse.search("Starting items: {}\n", monkey_data)[0]
-        formula = parse.search("Operation: new = old {}\n", monkey_data)[0]
-        test = parse.search("Test: divisible by {:d}\n", monkey_data)[0]
-        if_true = parse.search("If true: throw to monkey {:d}\n", monkey_data)[0]
-        if_false = parse.search("If false: throw to monkey {:d}", monkey_data)[0]
+        matcher = parse.search(monkey_match, monkey_data)
         monkeys.append(Monkey(
-            items = [int(x) for x in items.split(", ")],
-            formula = formula,
-            test = test,
-            if_true = if_true,
-            if_false = if_false
+            items = [int(x) for x in matcher["items"].split(", ")],
+            formula = matcher["formula"],
+            test = matcher["test"],
+            if_true = matcher["if_true"],
+            if_false = matcher["if_false"]
         ))
     return monkeys
 
