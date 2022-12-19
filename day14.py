@@ -24,7 +24,6 @@ for line in data:
                 rocks.add((x, y1))
 
 floor = max(y for (x, y) in rocks) + 2
-print(floor)
 
 def part1_is_empty(rocks, sand, pos):
     return pos not in rocks and pos not in sand
@@ -33,25 +32,14 @@ def part2_is_empty(rocks, sand, pos):
     return part1_is_empty(rocks, sand, pos) and pos[1] < floor
 
 def drop_sand(rocks, sand, pos_is_empty):
-    sx, sy = 500, 0
-    while sy < floor + 1:
-        nextp = (sx, sy + 1)
-        if pos_is_empty(rocks, sand, nextp):
-            sx, sy = nextp
-            continue
-
-        nextp = (sx - 1, sy + 1)
-        if pos_is_empty(rocks, sand, nextp):
-            sx, sy = nextp
-            continue
-
-        nextp = (sx + 1, sy + 1)
-        if pos_is_empty(rocks, sand, nextp):
-            sx, sy = nextp
-            continue
-        
-        return (sx ,sy)
-    return None
+    sx = 500
+    for sy in range(floor + 1):
+        for dx in (0, -1, 1):
+            if pos_is_empty(rocks, sand, (sx + dx, sy + 1)):
+                sx += dx
+                break
+        else:
+            return (sx ,sy)
 
 part1_sand = set()
 while new_sand := drop_sand(rocks, part1_sand, part1_is_empty):
